@@ -1,0 +1,17 @@
+{
+  "auth.failed": "Falha na autenticação.",
+  "tenant.invalid": "Tenant inválido.",
+  "tenant.expired": "A validade do tenant expirou. Entre em contato com o administrador do aplicativo.",
+  "tenant.inactive": "O tenant não está ativo. Entre em contato com o administrador do aplicativo.",
+  "caching.added": "Cache Adicionado: {0}",
+  "caching.refreshed": "Cache atualizado: {0}",
+  "identity.usernotfound": "Usuário não encontrado.",
+  "identity.usernotactive": "Usuário inativo. Entre em contato com o administrador.",
+  "identity.emailnotconfirmed": "E-mail não confirmado.",
+  "identity.invalidcredentials": "As credenciais fornecidas são inválidas.",
+  "identity.invalidtoken": "Token inválido.",
+  "entity.notfound": "{0} {1} Não encontrado.",
+  "address.alreadyexists": "O endereço {0} já existe.",
+  "address.notfound": "Endereço {0} não encontrado.",
+  "exceptionmiddleware.supportmessage": "Forneça o ErrorId para a equipe de suporte para análise posterior."
+}
