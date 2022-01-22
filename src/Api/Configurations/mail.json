@@ -1,0 +1,11 @@
+{
+  "MailSettings": {
+    "DisplayName": "Newton Dantas",
+    "EnableVerification": true,
+    "From": "newton@netstore.com.br",
+    "Host": "smtp.ethereal.email",
+    "Password": "",
+    "Port": 587,
+    "UserName": "newton@netstore.com.br"
+  }
+}
