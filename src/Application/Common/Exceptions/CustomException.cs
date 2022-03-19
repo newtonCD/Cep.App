@@ -1,4 +1,5 @@
 using System.Net;
+using System.Runtime.Serialization;
 
 namespace Cep.App.Application.Common.Exceptions;
 
@@ -13,5 +14,10 @@ public class CustomException : Exception
     {
         ErrorMessages = errors;
         StatusCode = statusCode;
+    }
+
+    protected CustomException(SerializationInfo info, in StreamingContext context)
+        : base(info, context)
+    {
     }
 }

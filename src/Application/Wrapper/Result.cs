@@ -90,14 +90,14 @@ public class Result<T> : Result, IResult<T>
         return new() { Succeeded = false, Messages = new List<string> { message } };
     }
 
-    public static ErrorResult<T> ReturnError(string message)
-    {
-        return new() { Succeeded = false, Messages = new List<string> { message }, StatusCode = 500 };
-    }
-
     public new static Result<T> Fail(List<string> messages)
     {
         return new() { Succeeded = false, Messages = messages };
+    }
+
+    public static ErrorResult<T> ReturnError(string message)
+    {
+        return new() { Succeeded = false, Messages = new List<string> { message }, StatusCode = 500 };
     }
 
     public static ErrorResult<T> ReturnError(List<string> messages)
@@ -115,14 +115,14 @@ public class Result<T> : Result, IResult<T>
         return Task.FromResult(Fail(message));
     }
 
-    public static Task<ErrorResult<T>> ReturnErrorAsync(string message)
-    {
-        return Task.FromResult(ReturnError(message));
-    }
-
     public new static Task<Result<T>> FailAsync(List<string> messages)
     {
         return Task.FromResult(Fail(messages));
+    }
+
+    public static Task<ErrorResult<T>> ReturnErrorAsync(string message)
+    {
+        return Task.FromResult(ReturnError(message));
     }
 
     public static Task<ErrorResult<T>> ReturnErrorAsync(List<string> messages)
