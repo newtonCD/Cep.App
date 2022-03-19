@@ -21,7 +21,7 @@
     },
     "Storage": {
       "StorageProvider": "mssql",
-      "ConnectionString": "Server=NEWTON-LAPTOP\\SQLEXPRESS;Database=CEP;Trusted_Connection=True;MultipleActiveResultSets=true;",
+      "ConnectionString": "Server=NEWTON-LAPTOP\\SQLEXPRESS;Database=CEP;User Id=sa;Password=C0nqu3r77M@;MultipleActiveResultSets=true;",
       "Options": {
         "CommandBatchMaxTimeout": "00:05:00",
         "QueuePollInterval": "00:00:01",

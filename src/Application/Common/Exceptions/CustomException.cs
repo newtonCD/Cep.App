@@ -2,10 +2,10 @@ using System.Net;
 
 namespace Cep.App.Application.Common.Exceptions;
 
+[Serializable]
 public class CustomException : Exception
 {
-    public List<string> ErrorMessages { get; } = new();
-
+    public List<string> ErrorMessages { get; }
     public HttpStatusCode StatusCode { get; }
 
     public CustomException(string message, List<string> errors = default, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)

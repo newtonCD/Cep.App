@@ -1,6 +1,6 @@
 {
   "DatabaseSettings": {
     "DBProvider": "mssql",
-    "ConnectionString": "Server=NEWTON-LAPTOP\\SQLEXPRESS;Database=CEP;Trusted_Connection=True;MultipleActiveResultSets=true;"
+    "ConnectionString": "Server=NEWTON-LAPTOP\\SQLEXPRESS;Database=CEP;User Id=sa;Password=C0nqu3r77M@;MultipleActiveResultSets=true;"
   }
 }
