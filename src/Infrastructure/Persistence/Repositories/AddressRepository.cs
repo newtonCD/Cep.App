@@ -18,43 +18,12 @@ public class AddressRepository : IAddressRepository
         _cache = cache;
     }
 
-    public async Task<Address> GetByZipCodeAsync(string zipcode)
+    public Task<Address> GetByZipCodeAsync(string zipcode)
     {
         if (string.IsNullOrWhiteSpace(zipcode))
             throw new ArgumentException($"'{nameof(zipcode)}' cannot be null or whitespace.", nameof(zipcode));
 
-        Address address = null;
-        byte[] objectFromCache = await _cache.GetAsync(zipcode);
-
-        if (objectFromCache != null)
-        {
-            string jsonToDeserialize = System.Text.Encoding.UTF8.GetString(objectFromCache);
-            address = JsonSerializer.Deserialize<Address>(jsonToDeserialize, new JsonSerializerOptions
-                        {
-                            WriteIndented = true,
-                            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                        });
-
-            if (address != null) return address;
-        }
-
-        IEnumerable<Address> addressResult = await _db.GetAsync<Address, dynamic>("dbo.Cep_GetAddress", new { Zipcode = zipcode });
-
-        if (addressResult != null)
-        {
-            address = addressResult.FirstOrDefault();
-            byte[] objectToCache = JsonSerializer.SerializeToUtf8Bytes(address, new JsonSerializerOptions
-                                    {
-                                        WriteIndented = true,
-                                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                                    });
-
-            await _cache.SetAsync(zipcode, objectToCache, new DistributedCacheEntryOptions()
-                                                            .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                                                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(180)));
-        }
-
-        return address;
+        return GetByZipCodeInternalAsync(zipcode);
     }
 
     public Task<Address> AddAsync(Address entity)
@@ -75,5 +44,41 @@ public class AddressRepository : IAddressRepository
     public Task UpdateAsync(Address entity)
     {
         throw new NotImplementedException();
+    }
+
+    private async Task<Address> GetByZipCodeInternalAsync(string zipcode)
+    {
+        Address address = null;
+        byte[] objectFromCache = await _cache.GetAsync(zipcode);
+
+        if (objectFromCache != null)
+        {
+            string jsonToDeserialize = System.Text.Encoding.UTF8.GetString(objectFromCache);
+            address = JsonSerializer.Deserialize<Address>(jsonToDeserialize, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+
+            if (address != null) return address;
+        }
+
+        IEnumerable<Address> addressResult = await _db.GetAsync<Address, dynamic>("dbo.Cep_GetAddress", new { Zipcode = zipcode });
+
+        if (addressResult != null)
+        {
+            address = addressResult.FirstOrDefault();
+            byte[] objectToCache = JsonSerializer.SerializeToUtf8Bytes(address, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
+
+            await _cache.SetAsync(zipcode, objectToCache, new DistributedCacheEntryOptions()
+                                                            .SetSlidingExpiration(TimeSpan.FromSeconds(60))
+                                                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(180)));
+        }
+
+        return address;
     }
 }

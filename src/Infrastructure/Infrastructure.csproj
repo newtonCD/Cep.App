@@ -11,6 +11,7 @@
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Common\Services\EventService.cs" />
+      <Compile Remove="Persistence\Repositories\GenericRepository.cs" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AspNetCoreRateLimit" Version="4.0.1" />

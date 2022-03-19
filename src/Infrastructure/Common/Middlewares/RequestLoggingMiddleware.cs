@@ -7,17 +7,18 @@ namespace Cep.App.Infrastructure.Common.Middlewares;
 
 public class RequestLoggingMiddleware : IMiddleware
 {
-    public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         LogContext.PushProperty("RequestTimeUTC", DateTime.UtcNow);
         string requestBody = string.Empty;
-        if (httpContext.Request.Path.ToString().Contains("tokens"))
+
+        if (context.Request.Path.ToString().Contains("tokens"))
         {
             requestBody = "[Redacted] Contains Sensitive Information.";
         }
         else
         {
-            var request = httpContext.Request;
+            var request = context.Request;
 
             if (!string.IsNullOrEmpty(request.ContentType)
                 && request.ContentType.StartsWith("application/json"))
@@ -32,9 +33,10 @@ public class RequestLoggingMiddleware : IMiddleware
         }
 
         LogContext.PushProperty("RequestBody", requestBody);
-        Log.ForContext("RequestHeaders", httpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()), destructureObjects: true)
+        Log.ForContext("RequestHeaders", context.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()), destructureObjects: true)
            .ForContext("RequestBody", requestBody)
-           .Information("HTTP {RequestMethod} Request sent to {RequestPath}", httpContext.Request.Method, httpContext.Request.Path);
-        await next(httpContext);
+           .Information("HTTP {RequestMethod} Request sent to {RequestPath}", context.Request.Method, context.Request.Path);
+
+        await next(context);
     }
 }

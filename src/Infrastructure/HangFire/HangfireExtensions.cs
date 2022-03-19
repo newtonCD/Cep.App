@@ -18,7 +18,9 @@ public static class HangfireExtensions
     {
         var storageSettings = services.GetOptions<HangFireStorageSettings>("HangFireSettings:Storage");
 
-        if (string.IsNullOrEmpty(storageSettings.StorageProvider)) throw new Exception("Storage HangFire Provider is not configured.");
+        if (string.IsNullOrEmpty(storageSettings.StorageProvider))
+            throw new InvalidOperationException("Storage HangFire Provider is not configured.");
+
         _logger.Information($"Hangfire: Current Storage Provider : {storageSettings.StorageProvider}");
 
         services.AddSingleton<JobActivator, ContextJobActivator>();
@@ -26,7 +28,7 @@ public static class HangfireExtensions
         switch (storageSettings.StorageProvider.ToLower())
         {
             case "postgresql":
-                services.AddHangfire((provider, config) =>
+                services.AddHangfire((_, config) =>
                 {
                     config.UsePostgreSqlStorage(storageSettings.ConnectionString, services.GetOptions<PostgreSqlStorageOptions>("HangFireSettings:Storage:Options"))
                     .UseFilter(new LogJobFilter())
@@ -35,7 +37,7 @@ public static class HangfireExtensions
                 break;
 
             case "mssql":
-                services.AddHangfire((provider, config) =>
+                services.AddHangfire((_, config) =>
                 {
                     config.UseSqlServerStorage(storageSettings.ConnectionString, services.GetOptions<SqlServerStorageOptions>("HangFireSettings:Storage:Options"))
                     .UseFilter(new LogJobFilter())
@@ -44,7 +46,7 @@ public static class HangfireExtensions
                 break;
 
             case "mysql":
-                services.AddHangfire((provider, config) =>
+                services.AddHangfire((_, config) =>
                 {
                     config.UseStorage(new MySqlStorage(storageSettings.ConnectionString, services.GetOptions<MySqlStorageOptions>("HangFireSettings:Storage:Options")))
                     .UseFilter(new LogJobFilter())
@@ -53,7 +55,7 @@ public static class HangfireExtensions
                 break;
 
             default:
-                throw new Exception($"HangFire Storage Provider {storageSettings.StorageProvider} is not supported.");
+                throw new InvalidOperationException($"HangFire Storage Provider {storageSettings.StorageProvider} is not supported.");
         }
 
         return services;

@@ -23,7 +23,7 @@ public class CacheService : ICacheService
         }
         catch
         {
-            return null;
+            return Array.Empty<byte>();
         }
     }
 
@@ -47,6 +47,7 @@ public class CacheService : ICacheService
         }
         catch
         {
+            // Ignore
         }
     }
 
@@ -55,10 +56,13 @@ public class CacheService : ICacheService
         try
         {
             await _cache.RefreshAsync(key, token);
-            _logger.LogDebug(string.Format("Cache Refreshed : {0}", key));
+#pragma warning disable CA2254 // Template should be a static expression
+            _logger.LogDebug($"Cache Refreshed : {key}");
+#pragma warning restore CA2254 // Template should be a static expression
         }
         catch
         {
+            // Ignore
         }
     }
 
@@ -70,6 +74,7 @@ public class CacheService : ICacheService
         }
         catch
         {
+            // Ignore
         }
     }
 
@@ -81,6 +86,7 @@ public class CacheService : ICacheService
         }
         catch
         {
+            // Ignore
         }
     }
 
@@ -89,10 +95,13 @@ public class CacheService : ICacheService
         try
         {
             _cache.Set(key, value, options);
+#pragma warning disable CA2254 // Template should be a static expression
             _logger.LogDebug($"Added to Cache : {key}");
+#pragma warning restore CA2254 // Template should be a static expression
         }
         catch
         {
+            // Ignore
         }
     }
 
@@ -101,10 +110,13 @@ public class CacheService : ICacheService
         try
         {
             await _cache.SetAsync(key, value, options, token);
+#pragma warning disable CA2254 // Template should be a static expression
             _logger.LogDebug($"Added to Cache : {key}");
+#pragma warning restore CA2254 // Template should be a static expression
         }
         catch
         {
+            // Ignore
         }
     }
 }

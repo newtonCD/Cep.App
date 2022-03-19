@@ -33,7 +33,7 @@ public static class DynamicServiceRegistrationExtensions
             })
             .Where(t => t.Service != null);
 
-        foreach (var transientService in transientServices)
+        foreach (var transientService in transientServices.Where(a => a is not null))
         {
             if (transientServiceType.IsAssignableFrom(transientService.Service))
             {
@@ -41,7 +41,7 @@ public static class DynamicServiceRegistrationExtensions
             }
         }
 
-        foreach (var scopedService in scopedServices)
+        foreach (var scopedService in scopedServices.Where(a => a is not null))
         {
             if (scopedServiceType.IsAssignableFrom(scopedService.Service))
             {
@@ -66,7 +66,7 @@ public static class DynamicServiceRegistrationExtensions
             })
             .Where(t => t.Service != null);
 
-        foreach (var type in servicetypes)
+        foreach (var type in servicetypes.Where(a => a is not null))
         {
             if (appSettingsType.IsAssignableFrom(type.Service))
             {

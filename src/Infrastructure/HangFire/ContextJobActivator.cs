@@ -18,7 +18,7 @@ public class ContextJobActivator : JobActivator
         return new Scope(context, _scopeFactory.CreateScope());
     }
 
-    private class Scope : JobActivatorScope, IServiceProvider
+    private sealed class Scope : JobActivatorScope, IServiceProvider
     {
         private readonly PerformContext _context;
         private readonly IServiceScope _scope;

@@ -65,6 +65,7 @@ internal class ExceptionMiddleware : IMiddleware
             }
 
             Log.Error($"{responseModel.Exception} Request failed with Status Code {context.Response.StatusCode} and Error Id {errorId}.");
+
             await response.WriteAsync(_jsonSerializer.Serialize(responseModel));
         }
     }

@@ -16,9 +16,9 @@ public class HangfireService : IJobService
         return BackgroundJob.Delete(jobId, fromState);
     }
 
-    public string Enqueue(Expression<Func<Task>> methodCall)
+    public string Enqueue(Expression<Func<Task>> expression)
     {
-        return BackgroundJob.Enqueue(methodCall);
+        return BackgroundJob.Enqueue(expression);
     }
 
     public string Enqueue<T>(Expression<Action<T>> methodCall)

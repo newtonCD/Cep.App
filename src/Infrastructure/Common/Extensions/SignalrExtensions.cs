@@ -29,7 +29,7 @@ public static class SignalrExtensions
                     break;
 
                 default:
-                    throw new Exception($"SignalR backplane Provider {backplaneSettings.Provider} is not supported.");
+                    throw new InvalidOperationException($"SignalR backplane Provider {backplaneSettings.Provider} is not supported.");
             }
 
             logger.Information($"SignalR Backplane Current Provider: {backplaneSettings.Provider}.");
