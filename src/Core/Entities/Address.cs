@@ -3,7 +3,7 @@
 public class Address
 {
     public string ZipCode { get; set; }
-    public int TypeId { get; set; }
+    public string AddressType { get; set; }
     public string Street { get; set; }
     public string Neighborhood { get; set; }
     public string City { get; set; }

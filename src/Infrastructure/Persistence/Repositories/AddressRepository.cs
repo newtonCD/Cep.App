@@ -21,12 +21,9 @@ public class AddressRepository : IAddressRepository
     public async Task<Address> GetByZipCodeAsync(string zipcode)
     {
         if (string.IsNullOrWhiteSpace(zipcode))
-        {
             throw new ArgumentException($"'{nameof(zipcode)}' cannot be null or whitespace.", nameof(zipcode));
-        }
 
         Address address = null;
-
         byte[] objectFromCache = await _cache.GetAsync(zipcode);
 
         if (objectFromCache != null)
