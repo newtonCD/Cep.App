@@ -1,9 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Cep.App.Core</RootNamespace>
         <AssemblyName>Cep.App.Core</AssemblyName>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+      <EmbeddedResource Remove="obj\**" />
+      <None Remove="obj\**" />
+    </ItemGroup>
     <ItemGroup>
         <Folder Include="Interfaces\Services\" />
         <Folder Include="Interfaces\Repositories\" />

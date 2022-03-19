@@ -5,6 +5,11 @@
         <AssemblyName>Cep.App.Infrastructure</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
+      <Compile Remove="obj\**" />
+      <EmbeddedResource Remove="obj\**" />
+      <None Remove="obj\**" />
+    </ItemGroup>
+    <ItemGroup>
       <Compile Remove="Common\Services\EventService.cs" />
     </ItemGroup>
     <ItemGroup>
