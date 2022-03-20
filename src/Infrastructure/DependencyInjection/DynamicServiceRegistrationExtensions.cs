@@ -33,7 +33,7 @@ public static class DynamicServiceRegistrationExtensions
             })
             .Where(t => t.Service != null);
 
-        foreach (var transientService in transientServices.Where(a => a.Service != null))
+        foreach (var transientService in transientServices.Where(a => a.Service != null && a.Implementation != null))
         {
             if (transientServiceType.IsAssignableFrom(transientService.Service))
             {
